@@ -652,6 +652,11 @@ function ParentView() {
     return h('div', { className: 't2-parent' }, header,
       h('div', { className: 't2-card' }, h('p', null, 'עדיין אין פרופיל. אפשר ליצור פרופיל לכל ילד, וכל אחד יקבל מעקב משלו.'),
         h(Btn, { className: 'primary', onClick: () => { commit({ ...state, current: '__new' }); go('train'); } }, '+ הוספת ילד/ה')),
+      h('section', { className: 't2-card t2-tools no-print' }, h('h3', null, 'יש גיבוי ממכשיר אחר?'),
+        h('div', { className: 't2-row wrap' },
+          h(Btn, { className: 'ghost sm', onClick: () => fileRef.current && fileRef.current.click() }, '⬆️ טעינת גיבוי'),
+          h('input', { ref: fileRef, type: 'file', accept: 'application/json,.json', hidden: true, onChange: importData })),
+        msg && h('p', { className: 't2-sub', role: 'status' }, msg)),
       sets && h(SetsCard, { sets }));
   }
   const kd = kidData(s, kid.id);
