@@ -2,16 +2,32 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="robots" content="noindex" />
+<meta name="theme-color" content="#7c5cff" />
 <title>תרגול למבחן שלב א, כיתה ב | elevenlabs.io</title>
 <meta name="description" content="98 שאלות לתרגול קצר ורגוע, עם הסבר אחרי כל תשובה." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Cpath d='M32 12l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z' fill='%23ffd23f'/%3E%3C/svg%3E" />
   <script type="module" crossorigin src="./index-D_1L_Yzd.js"></script>
   <link rel="modulepreload" crossorigin href="./rolldown-runtime-WkwZ5CU-.js">
   <link rel="modulepreload" crossorigin href="./vendor-DctBZRDK.js">
-  <link rel="modulepreload" crossorigin href="./audio-SI766vcO.js">
   <link rel="modulepreload" crossorigin href="./data-BLFTfogW.js">
+  <link rel="modulepreload" crossorigin href="./tier2.js">
+  <link rel="modulepreload" crossorigin href="./bank.js">
   <link rel="stylesheet" crossorigin href="./index-CXxvQb3-.css">
+  <link rel="stylesheet" crossorigin href="./tier2.css">
+  <style>
+    .boot{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:Arial,sans-serif;color:#5b3fd0;text-align:center;padding:24px}
+    .boot-star{font-size:3rem;animation:bootspin 1.6s ease-in-out infinite}
+    @keyframes bootspin{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.15) rotate(15deg)}}
+    @media (prefers-reduced-motion:reduce){.boot-star{animation:none}}
+    .boot-err{display:none;max-width:320px;line-height:1.6;color:#32274a}
+    .boot.failed .boot-err{display:block}
+    .boot.failed .boot-msg{display:none}
+    .boot button{margin-top:10px;min-height:44px;padding:0 20px;border-radius:999px;border:0;background:#6a4ce0;color:#fff;font:inherit;font-weight:700}
+  </style>
 </head>
-<body><div id="root"></div><footer style="text-align:center;font-size:11px;color:#9aa;padding:10px">קול: <a href="https://elevenlabs.io" target="_blank" rel="noopener" style="color:#9aa">elevenlabs.io</a></footer></body>
+<body><div id="root"><div class="boot" id="boot" role="status"><span class="boot-star" aria-hidden="true">⭐</span><span class="boot-msg">טוֹעֲנִים אֶת הַתִּרְגּוּל…</span><div class="boot-err">הַדַּף לֹא נִטְעַן. כְּדַאי לִבְדֹּק אֶת הָאִינְטֶרְנֶט וּלְנַסּוֹת שׁוּב.<br><button type="button" onclick="location.reload()">לְנַסּוֹת שׁוּב</button></div></div></div><noscript><p style="text-align:center;padding:16px">כדי לתרגל צריך להפעיל JavaScript בדפדפן.</p></noscript><footer style="text-align:center;font-size:11px;color:#6b7280;padding:10px">קול: <a href="https://elevenlabs.io" target="_blank" rel="noopener" style="color:#6b7280">elevenlabs.io</a></footer>
+<script>setTimeout(function(){var b=document.getElementById('boot');if(b)b.className+=' failed'},15000)</script>
+</body>
 </html>
