@@ -7,7 +7,20 @@
 <meta name="theme-color" content="#7c5cff" />
 <title>תרגול למבחן שלב א, כיתה ב | elevenlabs.io</title>
 <meta name="description" content="98 שאלות לתרגול קצר ורגוע, עם הסבר אחרי כל תשובה." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Cpath d='M32 12l6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z' fill='%23ffd23f'/%3E%3C/svg%3E" />
+<link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+<link rel="icon" href="./icons/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="תרגול שלב א" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<script>
+/* before first paint: mark installed mode so the install bar never shifts the layout */
+(function(){var m=function(q){return window.matchMedia&&matchMedia(q).matches};
+var inst=navigator.standalone===true||m('(display-mode: standalone)')||m('(display-mode: minimal-ui)')||m('(display-mode: fullscreen)');
+document.documentElement.className+=inst?' is-standalone':' pwa-bar-on';})();
+</script>
   <script type="module" crossorigin src="./index-D_1L_Yzd.js"></script>
   <link rel="modulepreload" crossorigin href="./rolldown-runtime-WkwZ5CU-.js">
   <link rel="modulepreload" crossorigin href="./vendor-DctBZRDK.js">
@@ -16,6 +29,8 @@
   <link rel="modulepreload" crossorigin href="./bank.js">
   <link rel="stylesheet" crossorigin href="./index-CXxvQb3-.css">
   <link rel="stylesheet" crossorigin href="./tier2.css">
+  <link rel="stylesheet" href="./pwa.css">
+  <script type="module" src="./pwa.js"></script>
   <style>
     .boot{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:Arial,sans-serif;color:#5b3fd0;text-align:center;padding:24px}
     .boot-star{font-size:3rem;animation:bootspin 1.6s ease-in-out infinite}
