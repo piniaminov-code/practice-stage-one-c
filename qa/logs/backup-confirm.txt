@@ -1,0 +1,86 @@
+# Confirm before overwrite on backup restore — qa/tests/backup-confirm.cjs
+# run: 2026-11-27, Chromium (Playwright, preinstalled), 375x667, service worker blocked. FIXTURE DATA ONLY.
+# change: tier2.js ParentView importData asks first when the device already has profiles (buttons: להחליף / ביטול).
+#         No-profile restore, backup JSON format, export, and stored bytes for a restore are unchanged.
+# command: NODE_PATH=$(npm root -g) node qa/tests/backup-confirm.cjs
+
+
+1. no profile on the device
+   before keys: (none)
+PASS no confirmation prompt when nothing would be lost
+   after keys: stage1-family.v1
+PASS stored data equals the backup file (format unchanged)
+PASS stored bytes are the same as before this change ({...empty(), ...backup})
+PASS no page errors
+
+2. device already has profiles (current="__new")
+   before keys: ilai-answers.v1, ilai-sound.v1, ilai-stars.v1, stage1-family.v1
+PASS seeded fixture is stored as non-canonical JSON (byte check is meaningful)
+   prompt: טעינת הגיבוי תחליף את כל הנתונים במכשיר. | יימחקו: FIXTURE-EXISTING-1, FIXTURE-EXISTING-2. ייטענו מהגיבוי: FIXTURE-BACKUP-KID. | להחליף | ביטול
+PASS prompt names who is removed
+PASS prompt names who is loaded
+PASS buttons are exactly: להחליף / ביטול (להחליף / ביטול)
+PASS while the prompt is open, all localStorage is byte-identical
+PASS after ביטול, ALL localStorage keys are byte-identical (raw string compare)
+PASS prompt closed after ביטול
+   message: הטעינה בוטלה. לא שונה דבר.
+PASS report still shows the existing child
+PASS after להחליף, stored data equals the backup
+PASS after להחליף, other keys (sets-page stars/answers/sound) byte-identical
+   message: הנתונים נטענו.
+PASS no page errors
+
+3. invalid file on a device with profiles
+PASS no prompt for an invalid file
+PASS storage byte-identical after an invalid file
+   message: לא הצלחנו לקרוא את הקובץ. צריך קובץ שנשמר מכאן.
+
+4. round trip: save backup → restore on a fresh device
+PASS fresh device: no prompt
+PASS restored data deep-equals the saved backup
+
+ALL PASSED
+
+================ REGRESSIONS ================
+# regressions after confirm-before-overwrite (2026-11-27, Chromium/Playwright preinstalled)
+## verify-bank
+
+all answer keys verified ✓
+## qa/tests/backup-confirm.cjs
+1 ALL PASSED
+PASS count: 19
+## qa/tests/flows.cjs
+PASS offline: no console errors []
+
+ALL PASSED
+## qa/tests/sweep.cjs 375x667 (axe)
+## focus sets: obscured=0
+## focus train-menu: obscured=0
+TOTAL ISSUES 0
+## qa/tests/report-fixture.cjs (main vs HEAD)
+== BASE main  (http://localhost:8772/)
+  actual report: answers=0, practice days=0, first-try %=—, tests=0
+  matches expected: NO
+== HEAD  (http://localhost:8765/)
+  actual report: answers=6, practice days=1, first-try %=67%, tests=0
+  matches expected: YES
+## qa/tests/backup-restore-fixture.cjs (diagnostic, now on HEAD)
+(a) NO-PROFILE STATE: restore the fixture backup
+  status message: "הנתונים נטענו."  confirm prompt shown: false
+(b) PROFILES EXIST, current="__new": restore the fixture backup
+  status message: ""  confirm prompt shown: true
+  VERDICT: existing data kept
+## confirm box: axe + touch targets
+axe on open confirm box: [] | button heights: 44,44
+## earlier tier-2 flow scripts (t2b, t2c)
+practice answered 10 score 2/10
+resume card 1
+answered dots after resume 5
+timeup 1 score 1/12 review rows 12
+ERRS []
+backup profiles 2
+restored chips 2 הנתונים נטענו.
+sets scroll restored 1500
+ERRS []
+
+screenshot: qa/media/backup-confirm-box.png (prompt open, 375x667)

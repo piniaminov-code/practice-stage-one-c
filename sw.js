@@ -14,7 +14,7 @@
 // To ship a change to this list, bump VERSION: the new worker installs a fresh
 // cache, takes over at once (skipWaiting + clients.claim) and deletes the old one.
 
-const VERSION = 'v2-2026-11-27';
+const VERSION = 'v3-2026-11-27';
 const PREFIX = 'stage1-shell-';
 const CACHE = PREFIX + VERSION;
 
