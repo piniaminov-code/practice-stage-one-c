@@ -1,0 +1,48 @@
+--- a/tier2.js
++++ b/tier2.js
+@@ -640,6 +640,7 @@
+   const [editing, setEditing] = useState(false);
+   const [confirm, setConfirm] = useState(null);
+   const [msg, setMsg] = useState('');
++  const [pending, setPending] = useState(null); // a parsed backup waiting for "replace?" confirmation
+   const fileRef = useRef(null);
+   const kid = s.profiles.find((p) => p.id === sel) || s.profiles[0];
+   const sets = origSetsProgress();
+@@ -659,13 +660,26 @@
+     f.text().then((t) => {
+       const d = JSON.parse(t);
+       if (!d || !Array.isArray(d.profiles) || typeof d.kids !== 'object') throw new Error('bad');
+-      commit({ ...empty(), ...d });
+-      setSel(d.profiles[0] && d.profiles[0].id);
+-      setMsg('הנתונים נטענו.');
++      // restoring replaces everything on this device: ask first when there is something to lose
++      if (state.profiles.length) { setPending(d); setMsg(''); return; }
++      applyBackup(d);
+     }).catch(() => setMsg('לא הצלחנו לקרוא את הקובץ. צריך קובץ שנשמר מכאן.'));
+     e.target.value = '';
+   };
+ 
++  const applyBackup = (d) => {
++    commit({ ...empty(), ...d });
++    setSel(d.profiles[0] && d.profiles[0].id);
++    setPending(null);
++    setMsg('הנתונים נטענו.');
++  };
++  const confirmReplace = pending && h('div', { className: 't2-confirm', role: 'alertdialog', 'aria-label': 'החלפת הנתונים' },
++    h('p', null, h('b', null, 'טעינת הגיבוי תחליף את כל הנתונים במכשיר.')),
++    h('p', null, `יימחקו: ${state.profiles.map((p) => p.name).join(', ')}. ייטענו מהגיבוי: ${pending.profiles.map((p) => p.name).join(', ') || 'אין פרופילים'}.`),
++    h('div', { className: 't2-row wrap' },
++      h(Btn, { className: 'danger sm', onClick: () => applyBackup(pending) }, 'להחליף'),
++      h(Btn, { className: 'ghost sm', onClick: exportData }, 'לשמור קודם גיבוי של המכשיר'),
++      h(Btn, { className: 'ghost sm', onClick: () => { setPending(null); setMsg('הטעינה בוטלה. לא שונה דבר.'); } }, 'ביטול')));
+   const header = h('div', { className: 't2-parent-h' },
+     h('h2', { className: 't2-h' }, '👪 אזור הורים'),
+     h('p', { className: 't2-sub' }, 'סיכום ההתקדמות באימון ובמבחנים. הנתונים נשמרים רק בדפדפן הזה, במכשיר הזה.'));
+@@ -748,6 +762,7 @@
+         h(Btn, { className: 'ghost sm', onClick: exportData }, '⬇️ שמירת גיבוי'),
+         h(Btn, { className: 'ghost sm', onClick: () => fileRef.current && fileRef.current.click() }, '⬆️ טעינת גיבוי'),
+         h('input', { ref: fileRef, type: 'file', accept: 'application/json,.json', hidden: true, onChange: importData })),
++      confirmReplace,
+       h('div', { className: 't2-row wrap' },
+         confirm === 'reset' ? h(Btn, { className: 'danger sm', onClick: () => { updateKid(kid.id, () => ({ att: {}, sessions: [], active: null })); setConfirm(null); setMsg('ההתקדמות אופסה.'); } }, `לאפס את ${kid.name}? לחצו שוב`)
+           : h(Btn, { className: 'ghost sm', onClick: () => setConfirm('reset') }, 'איפוס ההתקדמות'),
