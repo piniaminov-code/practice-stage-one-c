@@ -210,3 +210,5 @@ html:has(.t2-runbar){scroll-padding-top:84px}
   .hud{position:static}
   html:has(#root>div:not([hidden]) .hud){scroll-padding-top:0}
 }
+.t2-rep-line{margin:6px 0;line-height:1.7}
+.t2-nm{white-space:nowrap}

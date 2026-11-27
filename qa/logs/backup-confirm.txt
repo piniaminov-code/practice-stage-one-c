@@ -1,9 +1,12 @@
-# Confirm before overwrite on backup restore — qa/tests/backup-confirm.cjs
+# Backup restore confirm box — qa/tests/backup-confirm.cjs
 # run: 2026-11-27, Chromium (Playwright, preinstalled), 375x667, service worker blocked. FIXTURE DATA ONLY.
-# change: tier2.js ParentView importData asks first when the device already has profiles (buttons: להחליף / ביטול).
-#         No-profile restore, backup JSON format, export, and stored bytes for a restore are unchanged.
+# fix: names in <bdi dir="auto"> (with avatar), "removed" and "loaded" on separate lines, the same name twice
+#      in a list numbered (1)/(2), initial focus on ביטול, Escape = cancel, focus returns to "טעינת גיבוי".
+#      Buttons, wording of the box, backup JSON format and no-profile restore unchanged.
+# fixture names: removed = שִׁירָה, FIXTURE-B, נוֹעָה, נוֹעָה (same name twice); loaded = יוֹנָתָן FIXTURE-A, דָּנָה-FIXTURE-C
 # command: NODE_PATH=$(npm root -g) node qa/tests/backup-confirm.cjs
 
+================ HEAD (with the fix) ================
 
 1. no profile on the device
    before keys: (none)
@@ -16,15 +19,46 @@ PASS no page errors
 2. device already has profiles (current="__new")
    before keys: ilai-answers.v1, ilai-sound.v1, ilai-stars.v1, stage1-family.v1
 PASS seeded fixture is stored as non-canonical JSON (byte check is meaningful)
-   prompt: טעינת הגיבוי תחליף את כל הנתונים במכשיר. | יימחקו: FIXTURE-EXISTING-1, FIXTURE-EXISTING-2. ייטענו מהגיבוי: FIXTURE-BACKUP-KID. | להחליף | ביטול
-PASS prompt names who is removed
-PASS prompt names who is loaded
+   prompt: טעינת הגיבוי תחליף את כל הנתונים במכשיר. | יימחקו: 🦊 שִׁירָה, 🐸 FIXTURE-B, 🐼 נוֹעָה (1), 🐼 נוֹעָה (2) | ייטענו מהגיבוי: 🦁 יוֹנָתָן FIXTURE-A, 🦉 דָּנָה-FIXTURE-C | להחליף | ביטול
+   line: יימחקו: 🦊 שִׁירָה, 🐸 FIXTURE-B, 🐼 נוֹעָה (1), 🐼 נוֹעָה (2)
+     name "שִׁירָה" label "🦊 שִׁירָה" <bdi dir=auto> resolved=rtl unicode-bidi=isolate lines=1
+     name "FIXTURE-B" label "🐸 FIXTURE-B" <bdi dir=auto> resolved=ltr unicode-bidi=isolate lines=1
+     name "נוֹעָה" label "🐼 נוֹעָה (1)" <bdi dir=auto> resolved=rtl unicode-bidi=isolate lines=1
+     name "נוֹעָה" label "🐼 נוֹעָה (2)" <bdi dir=auto> resolved=rtl unicode-bidi=isolate lines=1
+   line: ייטענו מהגיבוי: 🦁 יוֹנָתָן FIXTURE-A, 🦉 דָּנָה-FIXTURE-C
+     name "יוֹנָתָן FIXTURE-A" label "🦁 יוֹנָתָן FIXTURE-A" <bdi dir=auto> resolved=rtl unicode-bidi=isolate lines=1
+     name "דָּנָה-FIXTURE-C" label "🦉 דָּנָה-FIXTURE-C" <bdi dir=auto> resolved=rtl unicode-bidi=isolate lines=1
+PASS "removed" and "loaded" are two separate lines
+PASS the "loaded" line is below the "removed" line
+PASS every name is in <bdi dir="auto"> (unicode-bidi: isolate)
+PASS no name is split across lines
+PASS Latin name "FIXTURE-B" resolves left-to-right inside its isolate
+PASS Hebrew and Hebrew+Latin names resolve right-to-left
+PASS two profiles named "נוֹעָה" are shown as (1) and (2)
+PASS every entry in the "removed" list is distinguishable
+PASS names that appear once get no number
+PASS prompt names who is removed and who is loaded
+PASS initial focus is on ביטול
+   Tab order: start ביטול → Shift+Tab "להחליף" → Tab "ביטול" → Tab "איפוס ההתקדמות"
+PASS Tab order inside the box: להחליף ⇄ ביטול
+PASS Tab from ביטול moves on to the next control (איפוס ההתקדמות)
+PASS moving focus with Tab writes nothing
 PASS buttons are exactly: להחליף / ביטול (להחליף / ביטול)
 PASS while the prompt is open, all localStorage is byte-identical
 PASS after ביטול, ALL localStorage keys are byte-identical (raw string compare)
 PASS prompt closed after ביטול
    message: הטעינה בוטלה. לא שונה דבר.
 PASS report still shows the existing child
+PASS after ביטול, focus returns to "טעינת גיבוי"
+PASS Escape (focus on ביטול) closes the box
+PASS Escape (focus on ביטול): ALL localStorage byte-identical
+PASS Escape (focus on ביטול): focus returns to "טעינת גיבוי"
+PASS Escape (focus on להחליף) closes the box
+PASS Escape (focus on להחליף): ALL localStorage byte-identical
+PASS Escape (focus on להחליף): focus returns to "טעינת גיבוי"
+PASS Escape (focus on page) closes the box
+PASS Escape (focus on page): ALL localStorage byte-identical
+PASS Escape (focus on page): focus returns to "טעינת גיבוי"
 PASS after להחליף, stored data equals the backup
 PASS after להחליף, other keys (sets-page stars/answers/sound) byte-identical
    message: הנתונים נטענו.
@@ -41,17 +75,39 @@ PASS restored data deep-equals the saved backup
 
 ALL PASSED
 
-================ REGRESSIONS ================
-# regressions after confirm-before-overwrite (2026-11-27, Chromium/Playwright preinstalled)
-## verify-bank
+================ same test against the previous commit e0f7873 (before the fix) ================
+# BASE=<server of e0f7873> node qa/tests/backup-confirm.cjs   (failures only)
+FAIL "removed" and "loaded" are two separate lines
+FAIL the "loaded" line is below the "removed" line
+FAIL every name is in <bdi dir="auto"> (unicode-bidi: isolate)
+FAIL no name is split across lines
+FAIL Latin name "FIXTURE-B" resolves left-to-right inside its isolate
+FAIL Hebrew and Hebrew+Latin names resolve right-to-left
+FAIL two profiles named "נוֹעָה" are shown as (1) and (2)
+FAIL every entry in the "removed" list is distinguishable
+FAIL names that appear once get no number
+FAIL prompt names who is removed and who is loaded
+FAIL initial focus is on ביטול
+FAIL Tab order inside the box: להחליף ⇄ ביטול
+FAIL Tab from ביטול moves on to the next control (איפוס ההתקדמות)
+FAIL after ביטול, focus returns to "טעינת גיבוי"
+FAIL Escape (focus on ביטול) closes the box
+FAIL Escape (focus on ביטול): focus returns to "טעינת גיבוי"
+FAIL Escape (focus on להחליף) closes the box
+FAIL Escape (focus on להחליף): focus returns to "טעינת גיבוי"
+FAIL Escape (focus on page) closes the box
+FAIL Escape (focus on page): focus returns to "טעינת גיבוי"
+20 FAILED
+# note: on e0f7873 Escape did nothing (box stayed open), so storage stayed byte-identical there too.
 
+================ REGRESSIONS ================
+# regressions after the confirm-box fix (2026-11-27, Chromium/Playwright preinstalled)
+## verify-bank
 all answer keys verified ✓
 ## qa/tests/backup-confirm.cjs
-1 ALL PASSED
-PASS count: 19
+ALL PASSED
+PASS count: 41
 ## qa/tests/flows.cjs
-PASS offline: no console errors []
-
 ALL PASSED
 ## qa/tests/sweep.cjs 375x667 (axe)
 ## focus sets: obscured=0
@@ -59,12 +115,10 @@ ALL PASSED
 TOTAL ISSUES 0
 ## qa/tests/report-fixture.cjs (main vs HEAD)
 == BASE main  (http://localhost:8772/)
-  actual report: answers=0, practice days=0, first-try %=—, tests=0
   matches expected: NO
 == HEAD  (http://localhost:8765/)
-  actual report: answers=6, practice days=1, first-try %=67%, tests=0
   matches expected: YES
-## qa/tests/backup-restore-fixture.cjs (diagnostic, now on HEAD)
+## qa/tests/backup-restore-fixture.cjs (diagnostic)
 (a) NO-PROFILE STATE: restore the fixture backup
   status message: "הנתונים נטענו."  confirm prompt shown: false
 (b) PROFILES EXIST, current="__new": restore the fixture backup
@@ -73,14 +127,11 @@ TOTAL ISSUES 0
 ## confirm box: axe + touch targets
 axe on open confirm box: [] | button heights: 44,44
 ## earlier tier-2 flow scripts (t2b, t2c)
-practice answered 10 score 2/10
 resume card 1
-answered dots after resume 5
-timeup 1 score 1/12 review rows 12
+timeup 1 score 3/12 review rows 12
 ERRS []
-backup profiles 2
 restored chips 2 הנתונים נטענו.
 sets scroll restored 1500
 ERRS []
 
-screenshot: qa/media/backup-confirm-box.png (prompt open, 375x667)
+screenshots: qa/media/backup-confirm-box.png (after: focus on ביטול), qa/media/backup-confirm-box-before.png (e0f7873)

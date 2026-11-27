@@ -642,6 +642,21 @@ function ParentView() {
   const [msg, setMsg] = useState('');
   const [pending, setPending] = useState(null); // a parsed backup waiting for "replace?" confirmation
   const fileRef = useRef(null);
+  const cancelRef = useRef(null);
+  const loadBtnRef = useRef(null);
+  const cancelPending = () => {
+    setPending(null);
+    setMsg('הטעינה בוטלה. לא שונה דבר.');
+    requestAnimationFrame(() => loadBtnRef.current && loadBtnRef.current.focus());
+  };
+  // while the "replace?" box is open: start on ביטול, and Escape cancels
+  useEffect(() => {
+    if (!pending) return;
+    if (cancelRef.current) cancelRef.current.focus();
+    const onKey = (e) => { if (e.key === 'Escape' && !document.querySelector('.pwa-sheet-wrap')) { e.preventDefault(); cancelPending(); } };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [pending]);
   const kid = s.profiles.find((p) => p.id === sel) || s.profiles[0];
   const sets = origSetsProgress();
 
@@ -673,12 +688,26 @@ function ParentView() {
     setPending(null);
     setMsg('הנתונים נטענו.');
   };
-  const confirmReplace = pending && h('div', { className: 't2-confirm', role: 'alertdialog', 'aria-label': 'החלפת הנתונים' },
-    h('p', null, h('b', null, 'טעינת הגיבוי תחליף את כל הנתונים במכשיר.')),
-    h('p', null, `יימחקו: ${state.profiles.map((p) => p.name).join(', ')}. ייטענו מהגיבוי: ${pending.profiles.map((p) => p.name).join(', ') || 'אין פרופילים'}.`),
+  // names are bidi-isolated; the same name twice in a list gets a number so they stay distinguishable
+  const nameList = (profiles) => {
+    if (!profiles.length) return 'אין פרופילים';
+    const total = {}, seen = {};
+    profiles.forEach((p) => { total[p.name] = (total[p.name] || 0) + 1; });
+    return profiles.map((p, i) => {
+      seen[p.name] = (seen[p.name] || 0) + 1;
+      return h(Fragment, { key: p.id || i }, i > 0 ? ', ' : '',
+        h('span', { className: 't2-nm' }, p.avatar ? p.avatar + ' ' : '', h('bdi', { dir: 'auto' }, String(p.name)), total[p.name] > 1 ? ` (${seen[p.name]})` : ''));
+    });
+  };
+  const confirmReplace = pending && h('div', { className: 't2-confirm', role: 'alertdialog', 'aria-labelledby': 't2-rep-t', 'aria-describedby': 't2-rep-d' },
+    h('p', { id: 't2-rep-t' }, h('b', null, 'טעינת הגיבוי תחליף את כל הנתונים במכשיר.')),
+    h('div', { id: 't2-rep-d' },
+      h('p', { className: 't2-rep-line' }, 'יימחקו: ', nameList(state.profiles)),
+      h('p', { className: 't2-rep-line' }, 'ייטענו מהגיבוי: ', nameList(pending.profiles))),
     h('div', { className: 't2-row wrap' },
       h(Btn, { className: 'danger sm', onClick: () => applyBackup(pending) }, 'להחליף'),
-      h(Btn, { className: 'ghost sm', onClick: () => { setPending(null); setMsg('הטעינה בוטלה. לא שונה דבר.'); } }, 'ביטול')));
+      // plain <button> (Btn can't take a ref) so focus can start here
+      h('button', { type: 'button', className: 't2-btn ghost sm', ref: cancelRef, onClick: cancelPending }, 'ביטול')));
   const header = h('div', { className: 't2-parent-h' },
     h('h2', { className: 't2-h' }, '👪 אזור הורים'),
     h('p', { className: 't2-sub' }, 'סיכום ההתקדמות באימון ובמבחנים. הנתונים נשמרים רק בדפדפן הזה, במכשיר הזה.'));
@@ -759,7 +788,7 @@ function ParentView() {
       h('div', { className: 't2-row wrap' },
         h(Btn, { className: 'ghost sm', onClick: () => window.print() }, '🖨️ הדפסת הדוח'),
         h(Btn, { className: 'ghost sm', onClick: exportData }, '⬇️ שמירת גיבוי'),
-        h(Btn, { className: 'ghost sm', onClick: () => fileRef.current && fileRef.current.click() }, '⬆️ טעינת גיבוי'),
+        h('button', { type: 'button', className: 't2-btn ghost sm', ref: loadBtnRef, onClick: () => fileRef.current && fileRef.current.click() }, '⬆️ טעינת גיבוי'),
         h('input', { ref: fileRef, type: 'file', accept: 'application/json,.json', hidden: true, onChange: importData })),
       confirmReplace,
       h('div', { className: 't2-row wrap' },
