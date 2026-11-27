@@ -1,0 +1,82 @@
+# earlier regression scripts (sets page + tier 2 flows)
+## qa
+set3 overflow {"sw":390,"w":390,"bad":[]}
+set4 overflow {"sw":390,"w":390,"bad":[]}
+set5 overflow {"sw":390,"w":390,"bad":[]}
+set6 overflow {"sw":390,"w":390,"bad":[]}
+topic0 overflow {"sw":390,"w":390,"bad":[]}
+topic1 overflow {"sw":390,"w":390,"bad":[]}
+topic2 overflow {"sw":390,"w":390,"bad":[]}
+stars after reload ⭐ 1 answered opts 1
+reset label לְאַפֵּס אֶת כָּל הַסֵּטִים? לְחַץ שׁוּב
+stars after reset ⭐ 0
+320 overflow {"sw":320,"w":320,"bad":[]}
+ERRS []
+## qa2
+setend text 🎉 סִיַּמְתָּ אֶת סֵט 1: נְמָלִים!
+⭐ 2 מִתּוֹךְ 14 בַּנִּסָּיוֹן הָרִאשׁוֹן
+
+לַסֵּט הַבָּא ← סֵט 2: דְּבוֹרִים
+tab1 סֵט 1: נְמָלִים
+✓ 14/14
+after next: pressed tab סֵט 2: דְּבוֹרִים
+0/14 scrollY 448
+after 10 more, sec top 180
+overflow 390
+last set next btn count 0
+ERRS []
+## qa3
+nw multi-line 0 nw total 3
+tabs top 180 hud bottom 114
+ERRS []
+## t2b
+resume card 1
+answered dots after resume 5
+timeup 1 score 1/12 review rows 12
+kpis [
+  '15\nתשובות',
+  '13%\nנכון בניסיון הראשון',
+  '1\nימי תרגול',
+  '1\nמבחנים'
+]
+sets visible ok
+sets answer star ⭐ 1
+ERRS []
+## t2c
+weak text 1
+recs 0
+profiles select 2 mistakes now אֵין טָעֻיּוֹת לְתַקֵּן. יָפֶה!
+ok menu2
+switched mistakes 4 שְׁאֵלוֹת לַחֲזֹר עֲלֵיהֶן
+backup profiles 2
+after wipe kid cards 0
+restored chips 2 הנתונים נטענו.
+tabbar in print false
+sets scroll restored 1500
+after back hash  sets visible true
+ERRS []
+## pwa2 (manifest, icons, installability, fullscreen, iPhone UA, standalone, print, service worker offline + update)
+manifest תרגול למבחן שלב א, כיתה ב | תרגול שלב א he rtl start ./ scope ./ display standalone ["fullscreen","standalone","minimal-ui"]
+start_url in scope true
+ icon icons/icon-192.png 200 192x192 OK image/png
+ icon icons/icon-512.png 200 512x512 OK image/png
+ icon icons/icon-maskable-512.png 200 512x512 OK image/png
+ icon icons/apple-touch-icon.png 200 180x180 OK image/png
+ icon icons/favicon-32.png 200 32x32 OK image/png
+installability errors []
+manifest parse errors []
+fullscreen: calls 1 fullscreenElement HTML label יציאה ממסך מלא install still visible true
+ after exit null
+iPhone: fs visible false install visible true
+ sheet הוספה למסך הבית באייפון או באייפד
+ sheet closed by Esc true
+standalone(display-mode): matches false bar visible true html  pwa-bar-on
+standalone(iOS navigator.standalone): bar visible false
+print: bar visible false
+SW caches ["stage1-shell-v2-2026-11-27"] entries 22 controller true
+offline reload renders sets: true
+offline new tab works: true
+child data in Cache Storage: null
+after update caches ["stage1-shell-v2-test"]
+SW ERRS []
+standalone(display-mode via matchMedia): bar visible false fs false install false html  is-standalone

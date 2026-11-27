@@ -1,0 +1,51 @@
+# sweep AFTER fixes, 375x667
+## sets-top: overflow=0 clipped=0 small=0 covered=1
+## sets-scrolled: overflow=0 clipped=0 small=0 covered=0
+## sets-tab4: overflow=0 clipped=0 small=0 covered=0
+## sets-setend: overflow=0 clipped=0 small=0 covered=2
+## sets-summary: overflow=0 clipped=0 small=0 covered=0
+## sets-topic: overflow=0 clipped=0 small=0 covered=1
+## install-sheet: overflow=0 clipped=0 small=0 covered=0
+## kid-setup: overflow=0 clipped=0 small=0 covered=0
+## train-menu: overflow=0 clipped=0 small=0 covered=3
+## run-reading: overflow=0 clipped=0 small=0 covered=0
+## run-hint: overflow=0 clipped=0 small=0 covered=0
+## run-feedback: overflow=0 clipped=0 small=0 covered=0
+## run-keypad: overflow=0 clipped=0 small=0 covered=0
+## run-num-fb: overflow=0 clipped=0 small=0 covered=0
+## test-menu: overflow=0 clipped=0 small=0 covered=0
+## test-run: overflow=0 clipped=0 small=0 covered=0
+## test-confirm: overflow=0 clipped=0 small=0 covered=0
+## test-results: overflow=0 clipped=0 small=0 covered=0
+## parent: overflow=0 clipped=0 small=0 covered=0
+## parent-bottom: overflow=0 clipped=0 small=0 covered=0
+## focus sets: obscured=0
+## focus train-menu: obscured=0
+CONSOLE ERRORS ["Service Worker registration blocked by Playwright"]
+TOTAL ISSUES 0
+
+# sweep AFTER, landscape 667x375
+## sets-top: overflow=0 clipped=0 small=0 covered=0
+## sets-scrolled: overflow=0 clipped=0 small=0 covered=0
+## sets-tab4: overflow=0 clipped=0 small=0 covered=0
+## sets-setend: overflow=0 clipped=0 small=0 covered=0
+## sets-summary: overflow=0 clipped=0 small=0 covered=0
+## sets-topic: overflow=0 clipped=0 small=0 covered=0
+## install-sheet: overflow=0 clipped=0 small=0 covered=0
+## kid-setup: overflow=0 clipped=0 small=0 covered=5
+## train-menu: overflow=0 clipped=0 small=0 covered=3
+## run-reading: overflow=0 clipped=0 small=0 covered=0
+## run-hint: overflow=0 clipped=0 small=0 covered=1
+## run-feedback: overflow=0 clipped=0 small=0 covered=1
+## run-keypad: overflow=0 clipped=0 small=0 covered=0
+## run-num-fb: overflow=0 clipped=0 small=0 covered=3
+## test-menu: overflow=0 clipped=0 small=0 covered=2
+## test-run: overflow=0 clipped=0 small=0 covered=0
+## test-confirm: overflow=0 clipped=0 small=0 covered=1
+## test-results: overflow=0 clipped=0 small=0 covered=0
+## parent: overflow=0 clipped=0 small=0 covered=0
+## parent-bottom: overflow=0 clipped=0 small=0 covered=0
+## focus sets: obscured=0
+## focus train-menu: obscured=0
+CONSOLE ERRORS ["Service Worker registration blocked by Playwright"]
+TOTAL ISSUES 0

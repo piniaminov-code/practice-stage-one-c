@@ -1,0 +1,29 @@
+# verify-bank
+for review (1):
+d-r2: FLAGGED – מה יש בדבשת? התשובה "שומן" כתובה בקטע, אבל ילד חושב עשוי לבחור "אוכל" (שומן הוא מאגר מזון). כדאי לדבר על זה.
+
+all answer keys verified ✓
+
+# flows (qa/tests/flows.cjs)
+PASS next set: set tabs (180px) below score bar (114px)
+PASS 10 more: new questions start at 180px
+PASS sets: focused controls hidden under bars = 0
+PASS sets: every .again button is at least 44px wide
+PASS sets: no console errors []
+PASS "+ ילד/ה" link height 44
+PASS test map: 1 row(s) for 24 questions
+PASS test map dots 44x44
+PASS test map: no page-wide sideways scroll
+PASS quiz ✕ is 44px
+PASS test map: jumping to question 20 keeps its dot in view
+PASS tier2: no console errors []
+PASS service worker controls the page
+PASS offline reload: unfinished practice offered for resume
+PASS offline resume continues at question 3
+PASS offline deep-link reload of #/parent works
+PASS parent report counts the 2 offline answers (got 2)
+PASS start over clears the resume card
+PASS after start over the report still counts the 2 answers
+PASS offline: no console errors []
+
+ALL PASSED

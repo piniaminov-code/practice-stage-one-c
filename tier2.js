@@ -166,6 +166,21 @@ function recordAttempts(kidId, results) {
     return { ...k, att };
   });
 }
+// Answers already given in a practice that was not finished (closed tab, "start over", new session).
+function activeItems(active) {
+  if (!active || active.mode !== 'practice') return [];
+  return active.qids.map((id) => {
+    const r = (active.answers || {})[id];
+    return r && r.done ? { id, given: r.given, ok: r.ok, firstOk: r.firstOk, ms: r.ms || 0, wrong: r.wrong || [] } : null;
+  }).filter(Boolean);
+}
+// Keep an unfinished practice in the history (as a partial session) instead of dropping it.
+function flushActive(kidId) {
+  const k = kidData(state, kidId);
+  const items = activeItems(k.active);
+  if (items.length) saveSession(kidId, k.active, items);
+  else if (k.active) updateKid(kidId, (x) => ({ ...x, active: null }));
+}
 function saveSession(kidId, sess, items) {
   const rec = {
     id: sess.id, mode: sess.mode, timed: !!sess.timed, qids: sess.qids, plan: sess.plan, title: sess.title,
@@ -281,7 +296,10 @@ function Runner({ kid, sess, sfx, onExit, onFinish }) {
   useEffect(() => {
     shownAt.current = Date.now();
     setNum(isTest && ans[it.id] && it.kind === 'num' ? String(ans[it.id].given) : '');
-    if (topRef.current) topRef.current.scrollIntoView({ block: 'start', behavior: 'auto' });
+    if (topRef.current) window.scrollTo(0, topRef.current.getBoundingClientRect().top + window.scrollY);
+    // the question map scrolls sideways on small phones: keep the current question in view
+    const cur = document.querySelector('.t2-map .t2-dot.cur');
+    if (cur && cur.parentElement.scrollWidth > cur.parentElement.clientWidth) cur.scrollIntoView({ block: 'nearest', inline: 'center' });
   }, [idx]);
   // clock
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
@@ -479,6 +497,7 @@ function Session({ kid, mode, params, sfx }) {
   useEffect(() => { setView('menu'); setSess(null); setResult(null); }, [kid.id, mode]);
 
   const start = (o) => {
+    flushActive(kid.id);
     let qids, title, extra = {};
     if (mode === 'test') {
       qids = buildTest(o.plan, kd.att);
@@ -497,7 +516,7 @@ function Session({ kid, mode, params, sfx }) {
     window.scrollTo(0, 0);
   };
   const resume = () => { setSess(active); setView('run'); };
-  const discard = () => updateKid(kid.id, (k) => ({ ...k, active: null }));
+  const discard = () => flushActive(kid.id);
 
   if (view === 'run' && sess) {
     return h(Runner, { kid, sess, sfx,
@@ -574,6 +593,8 @@ function Session({ kid, mode, params, sfx }) {
 function computeStats(kd) {
   const items = [];
   kd.sessions.forEach((s) => s.items.forEach((r) => items.push({ ...r, ts: s.started, mode: s.mode })));
+  // a practice still in progress counts too
+  activeItems(kd.active).forEach((r) => items.push({ ...r, ts: kd.active.started, mode: 'practice' }));
   const byType = {}, bySkill = {}, days = {};
   for (const r of items) {
     const it = BY_ID[r.id];

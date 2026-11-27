@@ -188,3 +188,25 @@ body.t2-running{padding-bottom:24px}
 body.t2-running .t2-tabbar{display:none}
 .t2-q .fb{scroll-margin-bottom:90px}
 .t2 h2.t2-h3{margin:18px 0 10px;font-size:1.15rem;color:#4a32b8;padding:0}
+/* QA sprint 3: keep keyboard focus and scrolled-to items out from under the fixed / sticky bars */
+html{scroll-padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+html:has(body.t2-running){scroll-padding-bottom:16px}
+html:has(#root>div:not([hidden]) .hud){scroll-padding-top:136px}
+html:has(.t2-runbar){scroll-padding-top:84px}
+/* 44px touch targets */
+.t2-link{min-height:44px}
+.t2-x{width:44px;height:44px}
+.t2-btn.sm{min-height:44px}
+.t2-switch select{min-height:44px}
+.t2-map{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;padding:6px;scrollbar-width:thin}
+.t2-dot{flex:none;width:44px;height:44px}
+/* short landscape screens: give the questions room (portrait is unchanged) */
+@media (max-height:480px){
+  .t2-tabbar{padding-top:4px;padding-bottom:calc(4px + env(safe-area-inset-bottom))}
+  .t2-tab{flex-direction:row;justify-content:center;gap:6px;min-height:44px}
+  .t2-tab-i{font-size:1.15rem}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+  html{scroll-padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  .hud{position:static}
+  html:has(#root>div:not([hidden]) .hud){scroll-padding-top:0}
+}

@@ -1,0 +1,79 @@
+# sweep BEFORE fixes, 375x667 (commit bf23dab)
+## sets-top: overflow=0 clipped=0 small=1 covered=1
+   small: button.again "🔊" 42x44
+## sets-scrolled: overflow=0 clipped=0 small=1 covered=0
+   small: button.again "🔊" 42x44
+## sets-tab4: overflow=0 clipped=0 small=1 covered=0
+   small: button.again "🔊" 42x44
+## sets-setend: overflow=0 clipped=0 small=1 covered=2
+   small: button.again "🔊" 42x44
+## sets-summary: overflow=0 clipped=0 small=1 covered=0
+   small: button.again "🔊" 42x44
+## sets-topic: overflow=0 clipped=0 small=0 covered=1
+## install-sheet: overflow=0 clipped=0 small=0 covered=14
+## train-menu: overflow=0 clipped=0 small=1 covered=3
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+## run-reading: overflow=0 clipped=0 small=2 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+## run-hint: overflow=0 clipped=0 small=2 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+## run-feedback: overflow=0 clipped=0 small=2 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+## run-keypad: overflow=0 clipped=0 small=2 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+## run-num-fb: overflow=0 clipped=0 small=2 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+## test-menu: overflow=0 clipped=0 small=1 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+## test-run: overflow=0 clipped=0 small=14 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+   small: button.t2-dot.cur "1" 34x34
+   small: button.t2-dot "2" 34x34
+   small: button.t2-dot "3" 34x34
+   small: button.t2-dot "4" 34x34
+   small: button.t2-dot "5" 34x34
+   small: button.t2-dot "6" 34x34
+## test-confirm: overflow=0 clipped=0 small=14 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+   small: button.t2-x "✕" 40x40
+   small: button.t2-dot.cur "1" 34x34
+   small: button.t2-dot "2" 34x34
+   small: button.t2-dot "3" 34x34
+   small: button.t2-dot "4" 34x34
+   small: button.t2-dot "5" 34x34
+   small: button.t2-dot "6" 34x34
+## test-results: overflow=0 clipped=0 small=1 covered=0
+   small: button.t2-link "+ יֶלֶד/ה" 64x40
+## parent: overflow=0 clipped=0 small=6 covered=0
+   small: button.t2-btn.ghost.sm "עריכה" 73x40
+   small: button.t2-btn.ghost.sm "🖨️ הדפסת הדוח" 144x40
+   small: button.t2-btn.ghost.sm "⬇️ שמירת גיבוי" 137x40
+   small: button.t2-btn.ghost.sm "⬆️ טעינת גיבוי" 132x40
+   small: button.t2-btn.ghost.sm "איפוס ההתקדמות" 152x40
+   small: button.t2-btn.ghost.sm "מחיקת הפרופיל" 140x40
+## parent-bottom: overflow=0 clipped=0 small=6 covered=0
+   small: button.t2-btn.ghost.sm "עריכה" 73x40
+   small: button.t2-btn.ghost.sm "🖨️ הדפסת הדוח" 144x40
+   small: button.t2-btn.ghost.sm "⬇️ שמירת גיבוי" 137x40
+   small: button.t2-btn.ghost.sm "⬆️ טעינת גיבוי" 132x40
+   small: button.t2-btn.ghost.sm "איפוס ההתקדמות" 152x40
+   small: button.t2-btn.ghost.sm "מחיקת הפרופיל" 140x40
+## focus sets: obscured=15
+   focus-obscured: סֵט 7: הַיָּרֵחַ 0/14 under t2-tabbar no-print
+   focus-obscured: א ⁦34⁩ under t2-tabbar no-print
+   focus-obscured: א ⁦11⁩ under t2-tabbar no-print
+   focus-obscured: ב ⁦24⁩ under t2-tabbar no-print
+   focus-obscured: ב ⁦5⁩ under t2-tabbar no-print
+   focus-obscured: ג ⁦7⁩ under t2-tabbar no-print
+## focus train-menu: obscured=3
+   focus-obscured: 5 under 
+   focus-obscured: 10 under t2-tab on
+   focus-obscured: 15 under t2-tab on
+CONSOLE ERRORS ["Service Worker registration blocked by Playwright"]
+TOTAL ISSUES 97

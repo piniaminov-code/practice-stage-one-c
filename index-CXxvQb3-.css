@@ -5,7 +5,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffb400;outline-offse
 .opt.is-right:after{content:"✓";color:#2f9e5f}
 .opt.is-wrong:after{content:"✗";color:#c94a22}
 .chk:disabled{opacity:.45;cursor:default;box-shadow:none}
-.tabs,.sec{scroll-margin-top:180px}
+.tabs,.sec{scroll-margin-top:44px}
 .setend{text-align:center;background:#fff;border:2px dashed #c9b8ff;border-radius:22px;padding:14px 16px 16px}
 .setend.done{background:#fff8d9;border:2px solid #ffd23f;box-shadow:0 3px #f2c230}
 .setend-msg{margin:0 0 10px;font-size:1.1rem;font-weight:700;color:#5b3fd0}
@@ -15,3 +15,4 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffb400;outline-offse
 .sec.word{--sc:#b5560c}.sec.ser{--sc:#0b7f5c}.sec.calc{--sc:#1670bd}.sec.sum{--sc:#bd2f62}
 .tab.on{background:#6a4ce0;border-color:#6a4ce0}.tab.on small{color:#ece6ff}
 .tabs.topics .tab.on{color:#3d2700}.tabs.topics .tab.on small{color:#5a3c00}
+button.again{min-width:44px}
