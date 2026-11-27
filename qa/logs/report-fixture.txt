@@ -1,0 +1,41 @@
+# Parent report fixture — qa/tests/report-fixture.cjs
+# run: 2026-11-27, Chromium (Playwright, preinstalled), 375x667, service worker blocked, Math.random seeded 12345
+# BASE main = origin/main 9ba2bf2, HEAD = claude/qa-sprint-3 1683ebc
+# command: BASE_URL=http://localhost:8772/ HEAD_URL=http://localhost:8765/ NODE_PATH=$(npm root -g) node qa/tests/report-fixture.cjs
+# ran twice: output identical
+
+FIXTURE
+  pattern (6 answers): R, W-R, R, W-W, R, R
+  expected report: answers=6, practice days=1, first-try %=67% (4/6), tests=0
+  (start over must not drop the answers already given)
+
+== BASE main 9ba2bf2 (http://localhost:8772/)
+  seeded answers:
+   1. 46 + 38 = ___    key=84  plan=R    typed=84       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   2. 68 + ___ = 83    key=15  plan=W-R  typed=16→15    feedback="נָכוֹן! הִצְלַחְתָּ בַּנִּסָּיוֹן הַשֵּׁנִי."
+   3. 43 + 21 − 17 = ___ key=47  plan=R    typed=47       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   4. 17 + 36 = ___    key=53  plan=W-W  typed=54→55    feedback="כִּמְעַט. בּוֹא נָבִין יַחַד."
+   5. 44 − 21 = ___    key=23  plan=R    typed=23       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   6. 53 − ___ = 44    key=9   plan=R    typed=9        feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+  actual report: answers=0, practice days=0, first-try %=—, tests=0
+  matches expected: NO
+
+== HEAD 1683ebc (http://localhost:8765/)
+  seeded answers:
+   1. 46 + 38 = ___    key=84  plan=R    typed=84       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   2. 68 + ___ = 83    key=15  plan=W-R  typed=16→15    feedback="נָכוֹן! הִצְלַחְתָּ בַּנִּסָּיוֹן הַשֵּׁנִי."
+   3. 43 + 21 − 17 = ___ key=47  plan=R    typed=47       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   4. 17 + 36 = ___    key=53  plan=W-W  typed=54→55    feedback="כִּמְעַט. בּוֹא נָבִין יַחַד."
+   5. 44 − 21 = ___    key=23  plan=R    typed=23       feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+   6. 53 − ___ = 44    key=9   plan=R    typed=9        feedback="נָכוֹן, כָּל הַכָּבוֹד!"
+  actual report: answers=6, practice days=1, first-try %=67%, tests=0
+  matches expected: YES
+
+WHY "counts the 2 answers" (qa/logs/2026-11-27-tests.log) vs 3 in qa/media/report-count-after.png
+  Different fixtures, both correct for their own input:
+  - qa/tests/flows.cjs (offline test) answers 2 questions: loop for(let i=0;i<2;i++) at line 43,
+    so it asserts the report shows 2.
+  - qa/media/report-count-*.png came from a separate scratch screenshot script (not committed) whose
+    loop answered 3 questions (i<3) before leaving the practice, so the after-image shows 3 and the
+    before-image (main, same 3 answers) shows 0.
+  Neither is a counting bug. This file replaces both with one seeded, committed fixture (6 answers).
