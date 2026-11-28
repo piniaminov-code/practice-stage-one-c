@@ -67,3 +67,7 @@ Always, in every project:
 - Any new access: accounts, API keys, permissions, network hosts, repositories.
 - Any private or personal data: collecting, storing, sharing or moving it.
 - Any action that is public, irreversible, or outside the boundaries above.
+
+## Project facts (read from this repo's own files; anything not listed here is unknown, do not assume it)
+
+- The repo root holds compiled hashed bundles (index-*.js, data-*.js, audio-*.js, vendor-*.js, a .css file) plus hand-named files (bank.js, tier2.js, tier2.css) and a `tools/` folder; no package.json. Hand-editing the hashed bundles is fragile: prefer the hand-named files and report if a change needs a hashed bundle. No package.json, so there is no build, lint or test command to run. Check changes by serving the folder (python3 -m http.server) and reading it in a browser at a phone width (390x844) before and after, and list exactly which files changed.
